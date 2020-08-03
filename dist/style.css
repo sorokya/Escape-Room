@@ -1,0 +1,16 @@
+body {
+    padding:0;
+    margin:0;
+    background:#000;
+    user-select:none;
+}
+
+h1 {
+    color: #fff;
+    text-align: center;
+}
+
+#escape {
+    display:table;
+    margin:auto;
+}
