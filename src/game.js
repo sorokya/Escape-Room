@@ -16,29 +16,26 @@ let lag = 0;
 let textures = {};
 
 function loadAssets() {
-    createImage('img/room_north.png', (img) => {
-        textures.room_north = img;
-    });
-    createImage('img/room_east.png', (img) => {
-        textures.room_east = img;
-    });
-    createImage('img/room_south.png', (img) => {
-        textures.room_south = img;
-    });
-    createImage('img/room_west.png', (img) => {
-        textures.room_west = img;
-    });
-    createImage('img/inside_drawer.png', (img) => {
-        textures.inside_drawer = img;
+    return new Promise(resolve => {
+        Promise.all([
+            loadTexture('room_north'),
+            loadTexture('room_east'),
+            loadTexture('room_south'),
+            loadTexture('room_west'),
+            loadTexture('inside_drawer')
+        ]).then(resolve);
     });
 }
 
-function createImage(src, callback) {
+function loadTexture(name) {
     let img = document.createElement('img');
-    img.src = src;
-    img.onload = function() {
-        callback(img);
-    }
+    img.src = `img/${name}.png`;
+    return new Promise(resolve => {
+        img.onload = () => {
+            textures[name] = img;
+            resolve();
+        }
+    })
 }
 
 let click = {
@@ -84,5 +81,4 @@ function render(lagOffset) {
     ctx.restore();
 }
 
-loadAssets();
-gameLoop();
+loadAssets().then(gameLoop);
