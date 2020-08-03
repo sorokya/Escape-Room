@@ -1,0 +1,8 @@
+# node stuff
+node_modules
+
+# bundle file
+dist/escape.js
+
+#krita backup files
+*.kra~
